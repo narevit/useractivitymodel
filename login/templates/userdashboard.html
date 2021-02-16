@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="welcome_content" style="text-align: center;">
+    <h2>Hi, {{request.session.name}}.<br>
+    Welcome to your dashboard.</h2>
+
+    <p>To logout :  <a href="/logout">  Click here</a></p>
+</div>
+
+{% endblock %}

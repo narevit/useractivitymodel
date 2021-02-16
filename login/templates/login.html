@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="login_wrapper">
+    
+        <div class="container">
+        
+            <div class="new_login_body">
+               
+                <div class="header_section">
+                    
+                    <h1> Log In </h1>
+                    
+                </div>
+          
+                <p class="login_toperrormsge" style="color:red;text-align: center;font-size: 18px;"> </p>
+
+                <div class="user_data">
+            
+                            <div class="login-email">
+                                <input type="text" name="email" class="login_email" placeholder="Email" onfocus="focusloginemail(this)" maxlength="100">
+                                <span class="email_icon"></span>
+                            </div>
+
+
+                            <div class="login-pwd">
+                                <input type="password" name="password" class="login_password" placeholder="Password" onfocus="focusloginpswd(this)" maxlength="100">
+                                <span class="pwd_icon"></span>
+                                <span class="hide_pswd_icon" onclick="loginpasswordshowhide(this)"></span>
+
+                            </div>
+            
+                            <div class="login_button_block">
+                            
+                                <button class="login_button">Log In</button>
+                            
+                            </div>
+
+                </div>
+        
+            </div>
+        </div>
+        
+        <div class="new_login_footer">
+            <div class="newregister_content" >
+                <h2>New User? <a href="/register"><span style="color: #FFCE49;font-weight:700">Sign Up</span></a></h2>
+            </div>
+    
+        </div>
+    
+    
+</div>
+
+<script>
+
+var siteurl = '{{CURRENT_SITE_URL}}'
+var csrftoken = getCookie('csrftoken');
+
+$(document).ready(function(){
+    var d = new Date();
+    document.getElementById("fullyear").innerHTML = d.getFullYear();
+});
+
+$(document).on('click', '.language-dropdown',function () {
+    event.stopPropagation();
+    $('.language-popup').css('display','block');
+});
+
+$(window).click(function(){
+    $(".language-popup").css('display','none');
+});
+
+
+$('.lang-change').on('click',function(){
+    
+    var text_change = $(this).text();
+    var val = $(this).attr("value");
+    $('.language-dropdown .lang_change').text(text_change);
+    $('.language-dropdown .lang_change').attr("value",val);
+
+    $.ajax({
+            type: "POST",
+            url:  siteurl+"/i18n/setlang/",
+            mode: 'cors',
+            withCredentials: false, 
+            headers: { 'Access-Control-Allow-Origin': '*', "X-CSRFToken": csrftoken },
+            xsrfHeaderName: "X-CSRFToken",
+            data : {"language":val},
+            success: function(result){
+            
+                location.reload();
+                
+            }
+    });
+
+
+});
+
+
+// Validations
+$('.login_email , .login_password').on("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            $('.login_button').trigger('click');
+        }
+});
+
+
+$('.login_button').on("click",function(){
+    var email = document.getElementsByClassName("login_email")[0].value.trim()
+    var password = document.getElementsByClassName("login_password")[0].value.trim()   
+
+    var emailvalidation = emailValidate(email);
+    var pswdvalidation  = pswdValidate(password);
+    if(emailvalidation == 0 || pswdvalidation == 0){
+        return false;
+    }
+    else{
+           $(".login_button").html("<i class='fa fa-spinner fa-spin'></i>&nbsp; Logging In")
+           document.getElementsByClassName("login_button")[0].disabled  = true;
+
+           $.ajax({
+                  type: "POST",
+                  url:  siteurl+'/loginsuccess',
+                  mode: 'cors',
+                  withCredentials: false, 
+                  headers: { 'Access-Control-Allow-Origin': '*', "X-CSRFToken": csrftoken },
+                  xsrfHeaderName: "X-CSRFToken",
+                  data: {email: email , password: password},
+                  success: function(result){
+                       
+                        if(!result['error']){
+                            window.location.href = siteurl+'/dashboard';
+                        }
+                        else{
+
+                            $(".login_button").html("Log In")
+                            document.getElementsByClassName("login_button")[0].disabled = false;
+
+                            $(".login_toperrormsge").html(result['msg'])
+                            
+                        }
+                        
+                  },error: function(xhr, textStatus, error) {
+
+                        var usererrMsg 
+                        if(xhr.status == 0 ){
+                            usererrMsg = "Please check your internet connection and retry."
+                        }
+                        else if(xhr.status == 500){
+                            usererrMsg = "Internal server error. Please try again later."
+                        }
+                        else if(xhr.status == 400 || xhr.status == 408){
+                            usererrMsg = "Something went wrong. Please try again"
+                        }
+                        else if(xhr.status == 403){
+                            usererrMsg = "Something went wrong. Try logging in again."
+                        }
+                      
+                        $(".login_button").html("Log In")
+                        document.getElementsByClassName("login_button")[0].disabled = false;
+
+                        $(".login_toperrormsge").html(usererrMsg)
+
+                  }
+            });
+    }
+
+
+    function emailValidate(email){
+        var regemail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,100})+$/;
+        
+        if(email == ""){
+            $(".login-email").css("border","2px solid #ff0000");
+            $(".login-email").append("<span class='loginemail_alerticon'></span> <span class='loginemailtooltiptext'>Please enter your email address.</span>")
+            $(".login_button").css({"background":"#FFC425","opacity":"1"})
+            return 0
+
+        }
+        else if(regemail.test(email) == false)                                  
+        {
+            $(".login-email").css("border","2px solid #ff0000");
+            $(".login-email").append("<span class='loginemail_alerticon'></span> <span class='loginemailtooltiptext'>Please enter a valid email address.</span>")
+            $(".login_button").css({"background":"#FFC425","opacity":"1"})
+            return 0
+        }
+
+    }
+    function pswdValidate(password){
+        if(password == "" )                       
+        {
+            $(".login-pwd").css("border","2px solid #ff0000");
+            // $(".hide_pswd_icon").remove();
+            $(".login-pwd").append("<span class='loginpswd_alerticon'></span> <span class='loginpwdtooltiptext'>Please enter your password.</span>")
+            $(".login_button").css({"background":"#FFC425","opacity":"1"})
+            return 0
+        }
+        
+    }
+
+})
+
+
+function loginpasswordshowhide(e){
+
+    if($(e).prev().prev().attr("type")=="password"){
+        $(e).prev().prev().attr("type","text");
+        $(e).css("background-image","url('https://static.animaker.com/imagesizes/show_password_icon.svg')")
+    }
+    else{
+        $(e).prev().prev().attr("type","password")
+        $(e).css("background-image","url('https://static.animaker.com/imagesizes/hide_password_icon.svg')")
+    }
+
+}
+
+function focusloginemail(e){
+    if($(e).parent().css("borderTopColor") == "rgb(255, 0, 0)"){
+        $(e).parent().removeAttr('style');
+        $(".loginemail_alerticon").remove();
+        $(".loginemailtooltiptext").remove()
+
+    }
+}
+
+function focusloginpswd(e){
+    if($(e).parent().css("borderTopColor") == "rgb(255, 0, 0)"){
+        // $(e).parent().css("border","2px solid #e1e1e1");
+        $(e).parent().removeAttr('style');
+        $(".loginpswd_alerticon").remove();
+        $(".loginpwdtooltiptext").remove()
+    }
+}
+$(document).on('click','.ad_bar_close',function() {
+    $(".ad_bar").css('display','none');
+});
+
+</script>
+
+{% endblock %}

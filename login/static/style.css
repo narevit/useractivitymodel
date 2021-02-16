@@ -1,0 +1,233 @@
+.login_wrapper .login-email:hover , .login_wrapper .login-pwd:hover ,.signup_wrapper .login-name:hover,.signup_wrapper .login-email:hover,.signup_wrapper .login-pwd:hover,.signup_wrapper .job_title:hover ,.frgt_bodycontainer .forget-email:hover{
+    border: 2px solid #FFCA00;
+  }
+  .login_wrapper .login-email:focus-within , .login_wrapper .login-pwd:focus-within,.signup_wrapper .login-name:focus-within,.signup_wrapper .login-email:focus-within,.signup_wrapper .login-pwd:focus-within,.signup_wrapper .job_title:focus-within, .frgt_bodycontainer .forget-email:focus-within{
+    border: 2px solid rgba(14,19,24,.45);
+  }
+
+  .login_wrapper .loginemailtooltiptext, .login_wrapper .loginpwdtooltiptext, .signup_wrapper .registernametooltiptext, .signup_wrapper .registeremailtooltiptext, .signup_wrapper .registerpwdtooltiptext, .signup_wrapper .registerjobtooltiptext ,.forget_pswdpage .forgetEmailtooltiptext, .reset_password_wrapper .resetpswdtooltiptext , .profNameInput .profilenametooltiptext, .teaminvitetooltiptext , .CompanyNameInput .companynametooltiptext , .CompanyAddressInput .companyaddresstooltiptext, .CompanyUsernameInput .billingnametooltiptext, .CompanyEmailaddrInput .billingemailtooltiptext , .CompanyCityInput .billingcitytooltiptext , .CompanyCountryInput .billingcountrytooltiptext{
+    visibility: visible;
+    width: 240px;
+    background-color: #333333;
+    color: #BFBFBF;
+    text-align: center;
+    border-radius: 4px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    top: 8px;
+    font-size: 16px;
+    left: 103%;
+  }
+  .login_wrapper .loginemailtooltiptext::after, .login_wrapper .loginpwdtooltiptext::after, .signup_wrapper .registernametooltiptext::after, .signup_wrapper .registeremailtooltiptext::after, .signup_wrapper .registerpwdtooltiptext::after, .signup_wrapper .registerjobtooltiptext::after ,.forget_pswdpage .forgetEmailtooltiptext::after,  .reset_password_wrapper .resetpswdtooltiptext::after , .profNameInput .profilenametooltiptext::after ,.teaminvitetooltiptext::after, .CompanyNameInput .companynametooltiptext::after , .CompanyAddressInput .companyaddresstooltiptext::after, .CompanyUsernameInput .billingnametooltiptext::after, .CompanyEmailaddrInput .billingemailtooltiptext::after , .CompanyCityInput .billingcitytooltiptext::after , .CompanyCountryInput .billingcountrytooltiptext::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #333333 transparent transparent;
+  }
+
+  .login_wrapper, .signup_wrapper, .forget_pswdpage, .twofactorautheticaiton_section, .reset_password_wrapper{
+    width:100%;
+    height:100%;
+    background-position: bottom;
+    overflow: hidden;
+  }
+
+  .login_wrapper .new_login_header .logo, .signup_wrapper .new_login_header .logo,.twofactorautheticaiton_section .login_block .logo, .reset_password_wrapper .reset_password_header .logo {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+  
+  .login_wrapper .new_login_header .logo img, .signup_wrapper .new_login_header .logo img { 
+    position: absolute;bottom:0;width:188px;height:52px;
+  }
+  .login_wrapper .new_login_body .header_section, .signup_wrapper .new_signup_body .header_section , .forget_pswdpage .frgt_bodycontainer .headerofcontent, .reset_password_wrapper .new_login_body .header_section{
+    padding-bottom: 20px;
+    text-align:center;
+    font-size: 28px;
+    color: #54536c;
+  }
+  
+  .login_wrapper .new_login_body .user_data , .signup_wrapper .new_signup_body .user_data , .reset_password_wrapper .new_login_body .user_data{
+    width:460px;
+    margin:0 auto;
+  }
+
+  .login_wrapper .new_login_footer , .signup_wrapper .new_register_footer, .forget_pswdpage .forgetarea_footer, .twofactorautheticaiton_section .login-footer, .reset_password_wrapper .reset_password_footer{
+    width: 100%;
+    height: 15%;
+}
+
+.login_wrapper .new_login_footer .newregister_content, .signup_wrapper .new_register_footer .login_redirect, .forget_pswdpage .forgetarea_footer .backtoforget_content, .twofactorautheticaiton_section .login-footer .tfaback_content, .reset_password_wrapper .reset_password_footer .backtoreset_content{
+    height: 50%;
+    text-align: center;
+}
+
+.login_wrapper .new_login_footer .newregister_content h2, .signup_wrapper .new_register_footer .login_redirect h2, .forget_pswdpage .forgetarea_footer .backtoforget_content h2, .twofactorautheticaiton_section .login-footer .tfaback_content h2, .reset_password_wrapper .reset_password_footer .backtoreset_content h2{
+    font-size: 18px;
+    color: #54536C;
+}
+
+.login_wrapper .new_login_footer .login_copyright_area, .signup_wrapper .new_register_footer .copyright_area, .forget_pswdpage .forgetarea_footer .copyright_area, .twofactorautheticaiton_section .login-footer .copyright_area , .reset_password_wrapper .reset_password_footer .copyright_area{
+  padding: 0px 100px;
+  height: 50%;
+}
+
+.new_login_footer .login_copyright_area .copyrights_text, .signup_wrapper .new_register_footer .copyright_area .copyrights_text, .forget_pswdpage .copyright_area .copyrights_text, .twofactorautheticaiton_section .copyright_area .copyrights, .reset_password_wrapper .reset_password_footer .copyright_area .copyrights_text{
+  font-size: 16px;
+  color: #e1e1e1;
+  display: inline-block;
+}
+
+.new_login_footer .login_copyright_area .language-dropdown , .signup_wrapper .new_register_footer .copyright_area .language-dropdown, .forget_pswdpage .copyright_area .language-dropdown, .twofactorautheticaiton_section .language-dropdown, .reset_password_wrapper .reset_password_footer .copyright_area .language-dropdown{
+  position: relative;
+  float: right;
+  color: #54536c;
+  cursor: pointer;
+}
+
+.new_login_footer .login_copyright_area .language-dropdown:hover, .signup_wrapper .new_register_footer .copyright_area .language-dropdown:hover, .forget_pswdpage .copyright_area .language-dropdown:hover, .twofactorautheticaiton_section .language-dropdown:hover, .reset_password_wrapper .reset_password_footer .copyright_area .language-dropdown:hover{
+  color: #FFCE49;
+} 
+
+.signup_wrapper .user_data .signup_button,.login_wrapper .login_button {
+    width: 100%;
+    font-size: 18px;
+    background:#CB2328;
+    color: white;
+    height: 50px;
+    text-align: center;
+    border-radius: 4px;
+    text-decoration: none;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    opacity: 0.8;
+  }
+  
+  .signup_wrapper .user_data .signup_button:hover ,.login_wrapper .login_button:hover, .forget_pswdpage .frgt_bodycontainer .forgetPswdSubmit:hover , .twofactorautheticaiton_section .login_block .user_data .login_button_block .login_button:hover, .reset_password_wrapper .user_data .reset_button_block .reset_button:hover {
+    background: #FFCA00;
+    opacity: 1;
+  }
+
+  @media only screen and (max-width: 550px) {
+    .login_wrapper .new_login_body .user_data, .signup_wrapper .new_signup_body .user_data, .reset_password_wrapper .new_login_body .user_data{
+        width:300px;
+        margin: 0 auto;
+    }  
+    .login_wrapper .new_login_body .header_section, .reset_password_wrapper .new_login_body .header_section{
+        padding:0;
+        font-size: 24px;
+    }
+    .login_wrapper .new_login_footer .login_copyright_area, .signup_wrapper .new_register_footer .copyright_area , .reset_password_footer .reset_password_footer .copyright_area{
+        padding:10px;
+    }
+    .login_wrapper .new_login_footer .newregister_content h2{
+        margin: 0px;
+    }
+    .signup_wrapper .privacy_text{
+      font-size: 12px;
+    } 
+  }
+
+
+  /* Register css here */
+
+.signup_wrapper .container , .login_wrapper .container{
+    height:90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .signup_wrapper .user_data .login-name , .signup_wrapper .user_data .login-email, .signup_wrapper  .user_data .login-pwd, .login_wrapper .user_data .login-email, .login_wrapper .user_data .login-pwd{
+    position: relative;
+    min-height: 50px;
+    display: inline-block;
+    border: 2px solid #e1e1e1;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0 20px 0;
+  }
+  
+  
+  .signup_wrapper .user_data .r_firstname, .signup_wrapper .user_data .r_email , .signup_wrapper .user_data .r_password, .login_wrapper .user_data .login_email, .login_wrapper .user_data .login_password{
+      width: 100%;
+      height: 50px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      color: #54536c;
+      padding-left:60px;
+  }
+  
+  .signup_wrapper .user_data .signup_button_block, .reset_password_wrapper .user_data .reset_button_block{
+      padding: 30px 0;
+  }
+  
+  .signup_wrapper .user_data .email_icon, .signup_wrapper .user_data .user_icon , .signup_wrapper .user_data .pwd_icon ,.login_wrapper .user_data .email_icon  ,.login_wrapper .user_data .pwd_icon{
+    position: absolute;
+    top: 13px;
+    left: 15px;
+    width: 24px;
+    height: 24px;
+  }
+  
+   
+  .signup_wrapper .user_data .user_icon {
+      background-image: url(https://static.animaker.com/imagesizes/name_icon.svg);
+  }
+
+  .login_wrapper .user_data .email_icon ,.signup_wrapper .user_data .email_icon{
+    background-image: url(https://static.animaker.com/icons/email-icon.svg);
+}
+.signup_wrapper .user_data .pwd_icon,.login_wrapper .user_data .pwd_icon{
+    background-image: url(https://static.animaker.com/imagesizes/password_icon.svg);
+}
+  
+  
+  .signup_wrapper .user_data .hide_icon,  .login_wrapper .user_data .hide_pswd_icon {
+    background-image: url(https://static.animaker.com/imagesizes/hide_password_icon.svg);
+    position: absolute;
+    top: 13px;
+    right: 15px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+  
+  
+  @media  only screen and (max-width: 550px) , (max-height:750px) {
+    .signup_wrapper .new_signup_body .header_section {
+      padding: 0px;
+      font-size: 24px;
+    }
+    .signup_wrapper .new_register_footer .login_redirect{
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    .signup_wrapper .new_register_footer .login_redirect h2{
+      position: absolute;
+      bottom: 0;
+    }
+    .signup_wrapper .new_login_header .logo img{
+      width:150px;height:52px;bottom: unset;
+    }
+    .signup_wrapper .user_data .signup_button_block{
+      padding: 10px 0px;
+    }
+  
+  }

@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}  Register {% endblock %}
+
+{% block content %}
+
+<div class="signup_wrapper">
+
+    <div class="container">
+            <div class="new_signup_body">
+            
+            <div class="header_section">
+                    <h1>Registration</h1>
+            </div>
+
+            <p class="register_topmsge" style="color:red;text-align: center;font-size: 18px;"></p>
+
+            <div class="user_data">
+            
+                <div class="login-name">
+                    <input type="text" name="firstname" class="r_firstname" value="" placeholder="Name" onfocus="focusregistername(this)" maxlength="100">
+                    <span class="user_icon"></span>
+
+                </div>
+                
+                
+                <div class="login-email">
+                    <input type="text" name="email" class="r_email" value="" placeholder="Email" onfocus="focusregistermail(this)" maxlength="100">
+                    <span class="email_icon"></span>
+                </div>
+                    
+            
+
+                <div class="login-pwd">
+                    <input type="password" name="password" class="r_password" value="" placeholder="Password"  onfocus="focusregisterpwd(this)" maxlength="100">
+                    <span class="pwd_icon"></span>
+                    <span class="hide_icon" onclick="registerpasswordshowhide(this)"></span>
+                </div>
+                
+                <div class="signup_button_block">
+                    <button class="signup_button"> Sign Up </button>
+                </div>
+    
+                    
+            </div>
+                    
+        </div>
+
+    </div>
+    <div class="new_register_footer">
+        <div class="login_redirect">
+            <h2>Already have an account?<a href="/login"><span style="color: #FFCE49;font-weight:700">Log In</span></a></h2>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+var siteurl = '{{CURRENT_SITE_URL}}'
+var csrftoken = getCookie('csrftoken');
+
+$('.r_firstname , .r_email , .r_password').on("keyup", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        $(".signup_button").trigger("click");
+    }
+});
+
+
+
+$('.signup_button').on("click",function(){
+
+    var name = document.getElementsByClassName("r_firstname")[0].value.trim()  
+    var email =  document.getElementsByClassName("r_email")[0].value.trim()  
+    var password =  document.getElementsByClassName("r_password")[0].value;   
+    // var jobtitle = document.getElementsByClassName("jobtitle")[0].value;   
+
+    var nameVal = usernameValidate(name);
+    var mailVal = emailValidate(email);
+    var pwdVal = pswdValidate(password);
+    // var jobVal = jobtitleValidate(jobtitle);
+
+    // clicked = !clicked;
+  
+    if(nameVal == 0 || mailVal == 0 || pwdVal==0 ){ 
+        return false;
+    }
+    else{
+           $(".signup_button").html("<i class='fa fa-spinner fa-spin'></i>&nbsp; Signing In")
+           document.getElementsByClassName("signup_button")[0].disabled  = true;
+
+           $.ajax({
+                  type: "POST",
+                  url:  siteurl+'/registersuccess',
+                  mode: 'cors',
+                  withCredentials: false, 
+                  headers: { 'Access-Control-Allow-Origin': '*', "X-CSRFToken": csrftoken },
+                  xsrfHeaderName: "X-CSRFToken",
+                  data: {name: name ,email: email , password: password , tz: Intl.DateTimeFormat().resolvedOptions().timeZone },
+                  success: function(result){
+
+                        if(!result['error']){
+                            $(".signup_button").html("Sign Up")
+                            document.getElementsByClassName("signup_button")[0].disabled = false;
+
+                            $(".register_topmsge").html("Your Registration is Successfully done <a href='/login'> Login here</a>")
+                        }
+                        else if(result['error']){
+
+                            $(".signup_button").html("Sign Up")
+                            document.getElementsByClassName("signup_button")[0].disabled = false;
+
+                            $(".register_topmsge").html(result['errorMsg'])
+                  
+                        }
+                        
+                  },error: function(xhr, textStatus, error) {
+
+                        $(".signup_button").html("Sign Up")
+                        document.getElementsByClassName("signup_button")[0].disabled = false;
+
+                        $(".register_topmsge").html("Please check your internet connection and retry.")
+
+                  }
+            });
+
+    }
+
+
+    function usernameValidate(name){
+        
+        if(name == "")                                  
+        {
+            $(".login-name").css("border","2px solid #ff0000");
+            $(".login-name").append("<span class='registername_alerticon'></span> <span class='registernametooltiptext'>Please enter your name.</span>")
+            $(".signup_button").css({"background":"#FFC425","opacity":"1"})
+            return 0;
+        }
+        else if(name.length < 2){
+            $(".login-name").css("border","2px solid #ff0000");
+            $(".login-name").append("<span class='registername_alerticon'></span> <span class='registernametooltiptext'>Name must contain 2 characters.</span>")
+            $(".signup_button").css({"background":"#FFC425","opacity":"1"})
+            return 0;
+        }
+    
+    }
+
+    function emailValidate(email){
+        var regemail =  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,100})+$/;
+
+        if(email == ""){
+            $(".login-email").css("border","2px solid #ff0000");
+            $(".login-email").append("<span class='registeremail_alerticon'></span> <span class='registeremailtooltiptext'>Please enter your email address.</span>")
+            $(".signup_button").css({"background":"#FFC425","opacity":"1"})
+            return 0;
+
+        }
+        else if(regemail.test(email) == false)                                  
+        {
+            $(".login-email").css("border","2px solid #ff0000");
+            $(".login-email").append("<span class='registeremail_alerticon'></span> <span class='registeremailtooltiptext'>Please enter a valid email address.</span>")
+            $(".signup_button").css({"background":"#FFC425","opacity":"1"})
+            return 0;
+        }
+      
+    }
+
+   function pswdValidate(password){
+        if(password.trim() == ""){
+            $(".login-pwd").css("border","2px solid #ff0000");
+            $(".login-pwd").append("<span class='registerpswd_alerticon'></span> <span class='registerpwdtooltiptext'>Please enter your password.</span>")
+            $(".signup_button").css({"background":"#FFC425","opacity":"1"})
+            return 0;
+        }
+        else if(password.length < 8){
+            $(".login-pwd").css("border","2px solid #ff0000");
+            $(".login-pwd").append("<span class='registerpswd_alerticon'></span> <span class='registerpwdtooltiptext'>Must contain 8 characters. Use a mix of letters, numbers or symbols.</span>")
+            $(".signup_button").css({"background":"#FFC425","opacity":"1"})
+            return 0;
+        }
+        else if( password.match(/^ /g) ||  password.match(/ $/g)){
+            $(".login-pwd").css("border","2px solid #ff0000");
+            $(".login-pwd").append(`<span class='registerpswd_alerticon'></span> <span class='registerpwdtooltiptext'>Your password can't start or end with blank spaces.</span>`)
+            $(".signup_button").css({"background":"#FFC425","opacity":"1"})
+            return 0;
+        }
+        else if( password.match(/[a-z]/g) &&  password.match(/[A-Z]/g) || password.match(/[a-z]/g) && password.match(/[0-9]/g) || password.match(/[a-z]/g) && password.match(/[!"#$%&'()*+,-./: ;<=>?@[\]^_`{|}~]/g) || password.match(/[A-Z]/g) && password.match(/[0-9]/g) || password.match(/[A-Z]/g) && password.match(/[!"#$%&'()*+,-./: ;<=>?@[\]^_`{|}~]/g) || password.match(/[0-9]/g) && password.match(/[!"#$%&'()*+,-./: ;<=>?@[\]^_`{|}~]/g) ){
+           return true;
+        }
+        else{
+            $(".login-pwd").css("border","2px solid #ff0000");
+            $(".login-pwd").append("<span class='registerpswd_alerticon'></span> <span class='registerpwdtooltiptext'>Password is weak. Use a mix of letters, numbers or symbols.</span>")
+            $(".signup_button").css({"background":"#FFC425","opacity":"1"})
+            return 0;
+        }
+       
+   }
+
+
+});
+
+
+function registerpasswordshowhide(e){
+
+    if($(e).prev().prev().attr("type")=="password"){
+        $(e).prev().prev().attr("type","text");
+        $(e).css("background-image","url('{% static 'imagesizes/show_password_icon.svg' %}')")
+    }
+    else{
+        $(e).prev().prev().attr("type","password")
+        $(e).css("background-image","url('{% static 'imagesizes/hide_password_icon.svg' %}')")
+    }
+
+}
+
+function focusregistername(e){
+    $(".register_topmsge").html("");
+    if($(e).parent().css("borderTopColor") == "rgb(255, 0, 0)"){
+        // $(e).parent().css("border","2px solid #e1e1e1");
+        $(e).parent().removeAttr('style');
+        $(".registername_alerticon").remove();
+        $(".registernametooltiptext").remove()
+
+    }
+}
+
+function focusregistermail(e){
+    $(".register_topmsge").html("");
+    if($(e).parent().css("borderTopColor") == "rgb(255, 0, 0)"){
+        // $(e).parent().css("border","2px solid #e1e1e1");
+        $(e).parent().removeAttr('style');
+        $(".registeremail_alerticon").remove();
+        $(".registeremailtooltiptext").remove()
+    }
+}
+
+function focusregisterpwd(e){
+    $(".register_topmsge").html("");
+    if($(e).parent().css("borderTopColor") == "rgb(255, 0, 0)"){
+        // $(e).parent().css("border","2px solid #e1e1e1");
+        $(e).parent().removeAttr('style');
+        $(".registerpswd_alerticon").remove();
+        $(".registerpwdtooltiptext").remove()
+    }
+}
+
+
+
+</script>
+
+
+{% endblock %}
+
+
